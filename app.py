@@ -13,7 +13,7 @@ model = AutoModelForSequenceClassification.from_pretrained(model_path)
 classifier = pipeline("text-classification", model=model, tokenizer=tokenizer)
 
 # ==== Load summaries (HTML articles) ====
-summary_folder = "html_articles"
+summary_folder = "html_articles/html_articles"
 category_summaries = {}
 
 for file in os.listdir(summary_folder):
