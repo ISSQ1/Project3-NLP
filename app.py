@@ -21,6 +21,14 @@ for file in os.listdir(summary_folder):
         category_name = file.replace(".html", "").replace("_", " ")
         with open(os.path.join(summary_folder, file), "r", encoding="utf-8") as f:
             category_summaries[category_name] = f.read()
+# ==== Convert label to readable sentiment ====
+def label_to_text(label_id):
+    mapping = {
+        "LABEL_0": "Negative",
+        "LABEL_1": "Neutral",
+        "LABEL_2": "Positive"
+    }
+    return mapping.get(label_id, "Unknown")
 
 # ==== Streamlit App UI ====
 st.set_page_config(page_title="Product Review Analyzer", layout="wide")
@@ -35,7 +43,7 @@ if st.button("🔍 Analyze"):
         st.warning("Please enter a review before analyzing.")
     else:
         prediction = classifier(review_text)[0]
-        sentiment = prediction["label"]
+        sentiment = label_to_text(prediction["label"])
 
         # Output sentiment
         st.subheader("📊 Sentiment Prediction:")
